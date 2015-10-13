@@ -1,0 +1,8 @@
+{
+  "predef": [
+    "window",
+    "document",
+    "Two"
+  ],
+  "esnext": true
+}
