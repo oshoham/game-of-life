@@ -1,0 +1,13 @@
+{
+  "name": "game-of-life",
+  "main": "dist/module.js",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "babelify": "^6.3.0",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4"
+  }
+}
