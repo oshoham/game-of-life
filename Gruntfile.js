@@ -4,7 +4,8 @@ module.exports = function (grunt) {
       dist: {
         options: {
           transform: [
-            ["babelify", { loose: "all" }]
+            ["babelify", { loose: "all" }],
+            ["glslify"]
           ]
         },
         files: {

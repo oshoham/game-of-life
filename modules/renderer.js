@@ -1,3 +1,4 @@
+import twgl from 'twgl.js';
 import { ALIVE } from './constants';
 
 const BORDER_COLOR = 'green';
@@ -5,11 +6,9 @@ const ALIVE_COLOR = 'red';
 const DEAD_COLOR = 'black';
 
 export default class Renderer {
-  constructor ({ gridHeight, gridWidth, windowHeight, windowWidth, elementToRenderTo }) {
-    this.gridHeight = gridHeight;
-    this.gridWidth = gridWidth;
-    this.windowHeight = windowHeight;
-    this.windowWidth = windowWidth;
+  constructor ({ height, width, elementToRenderTo }) {
+    this.height = height;
+    this.width = width;
     this.elementToRenderTo = elementToRenderTo;
 
     this.tileHeight = windowHeight/gridHeight;
