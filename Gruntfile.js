@@ -4,12 +4,12 @@ module.exports = function (grunt) {
       dist: {
         options: {
           transform: [
-            ["babelify", { loose: "all" }],
+            ["babelify", { presets: ["es2015"] }],
             ["glslify"]
           ]
         },
         files: {
-          "./dist/game-of-life.js": ["./modules/index.js"]
+          "./dist/game-of-life.js": ["./modules/**/*.js"]
         }
       }
     },

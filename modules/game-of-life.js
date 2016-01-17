@@ -17,8 +17,8 @@ export default class GameOfLife {
 
     */
 
-    var vertexShader = glslify('../shaders/vertex.glsl');
-    var fragmentShader = glslify('../shaders/fragment.glsl');
+    var vertexShader = glslify('./shaders/vertex.glsl');
+    var fragmentShader = glslify('./shaders/fragment.glsl');
 
     var glArrays = {
       position: {

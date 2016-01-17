@@ -2,14 +2,15 @@
   "name": "game-of-life",
   "main": "dist/module.js",
   "devDependencies": {
-    "babelify": "^6.3.0",
-    "glslify": "^5.0.2",
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-watch": "^0.6.1"
   },
   "dependencies": {
     "jquery": "^2.1.4",
-    "twgl.js": "^0.0.40"
+    "twgl.js": "^0.0.40",
+    "glslify": "^5.0.2"
   }
 }
