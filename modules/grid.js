@@ -61,4 +61,20 @@ export default class Grid {
 
     return liveNeighbors;
   }
+
+  toRGBAColorArray () {
+    var getColor = function (state) {
+      return state === ALIVE ? [255, 255, 255, 255] : [0, 0, 0, 255];
+    };
+
+    var cellColors = [];
+    for (let x = 0; x < this.width; x++) {
+      for (let y = 0; y < this.height; y++) {
+        let cell = this.get(x, y);
+        Array.prototype.push.apply(cellColors, getColor(cell));
+      }
+    }
+
+    return cellColors;
+  }
 }

@@ -3,6 +3,12 @@ export function mod (dividend, divisor) {
   return ((dividend % divisor) + divisor) % divisor;
 }
 
-export function gcd (a, b) {
-  return b === 0 ? a : gcd(b, a % b);
-}
+export let requestAnimationFrame = global.requestAnimationFrame || (function () {
+  return  global.webkitRequestAnimationFrame ||
+          global.mozRequestAnimationFrame ||
+          global.oRequestAnimationFrame ||
+          global.msRequestAnimationFrame ||
+          function (callback) {
+            global.setTimeout(callback, 1000 / 60);
+          };
+})();

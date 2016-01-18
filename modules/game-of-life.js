@@ -1,22 +1,12 @@
 import Grid from './grid';
 import { DEAD, ALIVE } from './constants';
-import requestAnimationFrame from './request-animation-frame';
+import { requestAnimationFrame } from './utils';
 
-var twgl = require('../node_modules/twgl.js');
+var twgl = require('twgl.js');
 var glslify = require('glslify');
 
 export default class GameOfLife {
   constructor ({ canvas }) {
-    /*
-
-    this.grid.set(25, 40, ALIVE);
-    this.grid.set(24, 40, ALIVE);
-    this.grid.set(24, 41, ALIVE);
-    this.grid.set(25, 39, ALIVE);
-    this.grid.set(26, 40, ALIVE);
-
-    */
-
     var vertexShader = glslify('./shaders/vertex.glsl');
     var fragmentShader = glslify('./shaders/fragment.glsl');
 
@@ -50,7 +40,7 @@ export default class GameOfLife {
   }
 
   run () {
-    requestAnimationFrame(this.render);
+    requestAnimationFrame(this.render.bind(this));
   }
 
   render (time) {
@@ -58,13 +48,19 @@ export default class GameOfLife {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
 
     // TODO: handle grid resize here
+    // maybe use bilinear interpolation to resize properly?
 
     this.updateGrid();
 
+    var textures = twgl.createTextures(this.gl, {
+      state: {
+        src: this.grid.toRGBAColorArray(),
+        width: this.width
+      }
+    });
+
     var uniforms = {
-      time: time * 0.00025,
-      resolution: [this.gl.canvas.width, this.gl.canvas.height],
-      state: this.grid.reduce((a, b) => a.concat(b), [])
+      state: textures.state
     };
 
     this.gl.useProgram(this.glProgramInfo.program);
@@ -72,7 +68,7 @@ export default class GameOfLife {
     twgl.setUniforms(this.glProgramInfo, uniforms);
     twgl.drawBufferInfo(this.gl, this.gl.TRIANGLES, this.glBufferInfo);
 
-    requestAnimationFrame(this.render);
+    requestAnimationFrame(this.render.bind(this));
   }
 
   updateGrid () {
