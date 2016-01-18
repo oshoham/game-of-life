@@ -37,6 +37,8 @@ export default class GameOfLife {
 
     this.grid = new Grid(this.height, this.width);
     this.nextGrid = new Grid(this.height, this.width);
+
+    this.gl.canvas.addEventListener('mousedown', this.mouseDownListener.bind(this), false);
   }
 
   run () {
@@ -50,7 +52,7 @@ export default class GameOfLife {
     // TODO: handle grid resize here
     // maybe use bilinear interpolation to resize properly?
 
-    this.updateGrid();
+    //this.updateGrid();
 
     var textures = twgl.createTextures(this.gl, {
       state: {
@@ -101,5 +103,41 @@ export default class GameOfLife {
     var temp = this.grid;
     this.grid = this.nextGrid;
     this.nextGrid = temp;
+  }
+
+  toggleCell (x, y) {
+    var currentState = this.grid.get(x, y);
+    var newState = currentState === ALIVE ? DEAD : ALIVE;
+    this.grid.set(x, y, newState);
+  }
+
+  mouseDownListener (evt) {
+    var boundingRect = this.gl.canvas.getBoundingClientRect();
+    var mousePosition = {
+      x: evt.clientX - boundingRect.left,
+      y: evt.clientY - boundingRect.top
+    };
+
+    this.toggleCell(mousePosition.x, mousePosition.y);
+
+    this.gl.canvas.removeEventListener('mousedown', this.mouseDownListener.bind(this), false);
+    window.addEventListener('mousemove', this.mouseMoveListener.bind(this), false);
+    window.addEventListener('mouseup', this.mouseUpListener.bind(this), false);
+  }
+
+  mouseMoveListener (evt) {
+    var boundingRect = this.gl.canvas.getBoundingClientRect();
+    var mousePosition = {
+      x: evt.clientX - boundingRect.left,
+      y: evt.clientY - boundingRect.top
+    };
+
+    this.toggleCell(mousePosition.x, mousePosition.y);
+  }
+
+  mouseUpListener (evt) {
+    this.gl.canvas.addEventListener('mousedown', this.mouseDownListener.bind(this), false);
+    window.removeEventListener('mousemove', this.mouseMoveListener.bind(this), false);
+    window.removeEventListener('mouseup', this.mouseUpListener.bind(this), false);
   }
 }
